@@ -103,11 +103,13 @@ contract VotingSystem {
         return s_lastTimeStamp;
     }
 
-    function getCandidateList() public view returns (Candidate[] memory) {
-        return s_candidateList[];
-    }
+    // function getCandidateList() public view returns (Candidate[] memory) {
+    //  return s_candidateList[];
+    //}
 
-    function getCandidate(int256 candidateId) returns (Candidate memory) {
+    function getCandidate(
+        uint256 candidateId
+    ) public view returns (Candidate memory) {
         return s_candidateList[candidateId];
     }
 }
