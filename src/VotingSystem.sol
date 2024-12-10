@@ -8,16 +8,19 @@ contract VotingSystem {
     error VotingSystem__VotingFinished();
     error VotingSystem__CandidateNotFound();
     error VotingSystem__VotingInProgress();
+
     struct Candidate {
         uint256 id;
         address candidateAddress;
         uint256 noOfVotes;
     }
+
     enum VotingState {
         OPEN,
         CAlCULATING,
         CLOSED
     }
+
     uint256 private immutable i_entranceFee;
     uint256 private immutable i_interval;
     uint256 private s_winnerId;
@@ -90,7 +93,7 @@ contract VotingSystem {
     mapping(address => bool) private s_eligibleVoter;
     Candidate[] private s_candidateList;
     VotingState private s_votingState;..
-*/
+    */
     function getVotingSystemState() public view returns (VotingState) {
         return s_votingState;
     }
@@ -111,9 +114,7 @@ contract VotingSystem {
     //  return s_candidateList[];
     //}
 
-    function getCandidate(
-        uint256 candidateId
-    ) public view returns (Candidate memory) {
+    function getCandidate(uint256 candidateId) public view returns (Candidate memory) {
         if (candidateId > s_candidateList.length || candidateId <= 0) {
             revert VotingSystem__CandidateNotFound();
         }

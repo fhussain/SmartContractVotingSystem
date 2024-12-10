@@ -11,12 +11,8 @@ contract DeployVotingSystem {
         HelperConfig.NetworkConfig memory config = helperConfig.getConfig();
 
         // Deploy the VotingSystem contract with configuration data
-        VotingSystem votingSystem = new VotingSystem(
-            config.candidateList,
-            config.eligibleVoterList,
-            config.entranceFee,
-            config.interval
-        );
+        VotingSystem votingSystem =
+            new VotingSystem(config.candidateList, config.eligibleVoterList, config.entranceFee, config.interval);
 
         // Emit the contract address for easy verification
         emit DeployVotingSystemAddress(address(votingSystem));
