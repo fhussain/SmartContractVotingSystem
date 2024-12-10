@@ -27,6 +27,7 @@ contract VotingSystem {
     VotingState private s_votingState;
 
     event Voted(address indexed voter, uint256 candidateId);
+    event WinnerPicked(uint256 winnerId);
 
     constructor(
         address[] memory candidateList,
@@ -35,7 +36,7 @@ contract VotingSystem {
         uint256 interval
     ) {
         for (uint256 i = 0; i < candidateList.length; i++) {
-            s_candidateList[i] = Candidate(i + 1, candidateList[i], 0);
+            s_candidateList.push(Candidate(i + 1, candidateList[i], 0));
         }
         for (uint256 i = 0; i < eligibleVoterList.length; i++) {
             s_eligibleVoter[eligibleVoterList[i]] = true;
@@ -68,6 +69,7 @@ contract VotingSystem {
         if ((block.timestamp - s_lastTimeStamp) < i_interval) {
             revert VotingSystem__VotingInProgress();
         }
+        s_votingState = VotingState.CAlCULATING;
         uint256 winnerId = 0;
         uint256 highestVotes = 0;
         for (uint256 i = 0; i < s_candidateList.length; i++) {
@@ -77,6 +79,8 @@ contract VotingSystem {
             }
         }
         s_winnerId = winnerId;
+        emit WinnerPicked(s_winnerId);
+        s_votingState = VotingState.CLOSED;
     }
 
     /* uint256 private immutable i_entranceFee;..
@@ -110,6 +114,9 @@ contract VotingSystem {
     function getCandidate(
         uint256 candidateId
     ) public view returns (Candidate memory) {
-        return s_candidateList[candidateId];
+        if (candidateId > s_candidateList.length || candidateId <= 0) {
+            revert VotingSystem__CandidateNotFound();
+        }
+        return s_candidateList[candidateId - 1];
     }
 }
