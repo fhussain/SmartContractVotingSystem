@@ -32,10 +32,7 @@ contract VotingSystemTest is Test {
 
     function testInitialSetup() public view {
         // Verify contract state
-        assertEq(
-            uint256(votingSystem.getVotingSystemState()),
-            uint256(VotingSystem.VotingState.OPEN)
-        );
+        assertEq(uint256(votingSystem.getVotingSystemState()), uint256(VotingSystem.VotingState.OPEN));
         assertEq(votingSystem.getEntranceFee(), entranceFee);
     }
 
@@ -85,10 +82,7 @@ contract VotingSystemTest is Test {
 
         // Verify winner
         assertEq(votingSystem.getWinner(), 2);
-        assertEq(
-            uint256(votingSystem.getVotingSystemState()),
-            uint256(VotingSystem.VotingState.CLOSED)
-        );
+        assertEq(uint256(votingSystem.getVotingSystemState()), uint256(VotingSystem.VotingState.CLOSED));
     }
 
     function testFailCalculateWinnerBeforeInterval() public {

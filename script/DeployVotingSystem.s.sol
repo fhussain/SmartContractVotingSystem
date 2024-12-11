@@ -13,12 +13,8 @@ contract DeployVotingSystem is Script {
 
         // Deploy the VotingSystem contract with configuration data
         vm.startBroadcast();
-        VotingSystem votingSystem = new VotingSystem(
-            config.candidateList,
-            config.eligibleVoterList,
-            config.entranceFee,
-            config.interval
-        );
+        VotingSystem votingSystem =
+            new VotingSystem(config.candidateList, config.eligibleVoterList, config.entranceFee, config.interval);
         vm.stopBroadcast();
         return (votingSystem, helperConfig);
     }
